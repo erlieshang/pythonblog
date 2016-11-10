@@ -1,19 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Erlie's Blog</title>
-</head>
-<body>
-    <h1>It is </h1>
+{% extends "blog/base.html" %}
+
+{% block title %}Index--Erlie's Blog{% endblock %}
+
+{% block content %}
+    <h1>The recent blog:</h1>
     {%  if latest_post_list %}
         <ul>
             {% for post in latest_post_list %}
-                <li>{{ post.title }} date: {{ post.pub_date }}</li>
+                <li><a href="{% url 'blog:detail' post.id %}">{{ post.title }} date: {{ post.pub_date|date }}</a></li>
             {% endfor %}
         </ul>
     {% else %}
         <p>No posts are available.</p>
     {% endif %}
-</body>
-</html>
+{% endblock %}

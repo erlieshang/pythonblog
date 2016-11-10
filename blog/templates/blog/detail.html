@@ -1,0 +1,13 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}{{ post.title }}--Erlie's Blog{% endblock %}
+
+{% block content %}
+    {%  if post %}
+        <h1>{{ post.title }}</h1>
+        <h2>Author: {{ post.author.username }}&nbsp;&nbsp;&nbsp;Date: {{ post.pub_date }}</h2>
+        <p>{{ post.text }}</p>
+    {% else %}
+        <p>Article Not Found!</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "blog/base.html" %}
+
+{% block title %}List--Erlie's Blog{% endblock %}
+
+{% block content %}
+    {% if post_list %}
+        <table class="table table-hover" id="blog-list">
+            <caption><h1>Blog List</h1></caption>
+            <thead><tr><th>Title</th><th>Publish Date</th></tr></thead>
+            <tbody>
+            {% for post in post_list %}
+                <tr>
+                    <td><a href="{% url 'blog:detail' post.id %}">{{ post.title|capfirst }}</a></td>
+                    <td class="text-muted">{{ post.pub_date|date:"H:i M d, Y" }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No posts are available.</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Drafts--Erlie's Blog{% endblock %}
+
+{% block content %}
+    {% if draft_list %}
+        <table class="table table-hover" id="blog-list">
+            <caption><h1>Drafts List</h1></caption>
+            <thead><tr><th>Title</th><th>Created Date</th></tr></thead>
+            <tbody>
+            {% for post in draft_list %}
+                <tr>
+                    <td><a href="{% url 'blog:detail' post.id %}">{{ post.title|capfirst }}</a></td>
+                    <td class="text-muted">{{ post.created_date|date:"H:i M d, Y" }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No posts are available.</p>
+    {% endif %}
+{% endblock %}

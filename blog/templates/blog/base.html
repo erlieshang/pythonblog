@@ -5,6 +5,9 @@
     <title>{% block title %}base page{% endblock %}</title>
     {% load staticfiles %}
     <link  href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link  href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </head>
 <body>
     <nav class="navbar navbar-default">
@@ -15,7 +18,8 @@
             <div>
                 <ul class="nav navbar-nav">
                     <li><a href="{% url 'blog:index' %}">Index</a></li>
-                    <li><a href="{% url 'blog:index' %}">Blog List</a></li>
+                    <li><a href="{% url 'blog:list' %}">Blog List</a></li>
+                    <li><a href="{% url 'blog:drafts' %}">Drafts</a></li>
                 </ul>
                 <a href="{% url 'blog:new_post' %}">
                     <button type="button" class="btn btn-primary navbar-btn navbar-right">New Post</button>

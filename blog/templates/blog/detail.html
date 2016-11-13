@@ -5,8 +5,25 @@
 {% block content %}
     {%  if post %}
         <h1>{{ post.title }}</h1>
-        <h2>Author: {{ post.author.username }}&nbsp;&nbsp;&nbsp;Date: {{ post.pub_date }}</h2>
-        <p>{{ post.text }}</p>
+        <div class="row">
+            <div class="col-sm-2 text-left">
+                <h4 class="text-muted">Author: {{ post.author.username }}</h4>
+            </div>
+            <div class="col-sm-4">
+                {% if post.pub_date %}
+                    <h4 class="text-muted">Published Date: {{ post.pub_date|date:"H:i M d, Y" }}</h4>
+                {% else %}
+                    <h4 class="text-muted">Created Date: {{ post.created_date|date:"H:i M d, Y" }}</h4>
+                {% endif %}
+            </div>
+            <div class="col-sm-6 text-right">
+            {% if post.pub_date is None %}
+                <a href="{% url 'blog:post_pub' post.id%}"><button type="button" class="btn btn-primary">Publish</button></a>
+            {% endif %}
+                <a href="{% url 'blog:post_edit' post.id%}"><button type="button" class="btn btn-default">Edit</button></a>
+            </div>
+        </div>
+        <p id="detail-text">{{ post.text|linebreaks }}</p>
     {% else %}
         <p>Article Not Found!</p>
     {% endif %}

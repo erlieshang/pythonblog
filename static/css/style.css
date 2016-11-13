@@ -1,0 +1,33 @@
+#index-title {
+    margin-bottom: 60px;
+}
+#index-recent {
+    list-style-type: none;
+}
+
+#index-recent a {
+    text-decoration: none;
+    color: black;
+}
+
+#index-recent h2 {
+    margin-top: 0;
+}
+
+#index-recent p {
+    margin-top: 20px;
+    margin-bottom: 60px;
+}
+
+#blog-list a {
+    color: black;
+    text-decoration: none;
+}
+
+#detail-text {
+    margin-top: 40px;
+}
+
+#post_edit label {
+    float: left;
+}

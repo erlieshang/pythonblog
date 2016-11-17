@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    {% block meta %}<meta charset="UTF-8">{% endblock %}
     <title>{% block title %}base page{% endblock %}</title>
     {% load staticfiles %}
-    <link  href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
-    <link  href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    {% block script %}{% endblock %}
 </head>
 <body>
     <nav class="navbar navbar-default">

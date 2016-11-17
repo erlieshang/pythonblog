@@ -3,6 +3,7 @@ from .models import Post
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 from .forms import PostForm
 
 
@@ -17,6 +18,7 @@ class IndexView(generic.ListView):
 class ListView(generic.ListView):
     template_name = 'blog/list.html'
     context_object_name = 'post_list'
+    paginate_by = 10
 
     def get_queryset(self):
         return Post.objects.filter(pub_date__isnull=False).order_by('-pub_date')
@@ -35,6 +37,7 @@ class DetailView(generic.DetailView):
     template_name = 'blog/detail.html'
 
 
+@login_required
 def post_new(request):
     if request.method == "POST":
         form = PostForm(request.POST)
@@ -51,6 +54,7 @@ def post_new(request):
     return render(request, 'blog/post_edit.html', {'form': form})
 
 
+@login_required
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
@@ -65,7 +69,20 @@ def post_edit(request, pk):
     return render(request, 'blog/post_edit.html', {'form': form, 'post': post})
 
 
+@login_required
 def post_pub(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.publish()
     return redirect('blog:detail', pk=post.pk)
+
+
+@login_required
+def post_remove(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        if request.POST.get('submit') == 'Confirm':
+            post.delete()
+            return redirect('blog:list')
+        else:
+            return redirect('blog:detail', pk=post.pk)
+    return render(request, 'blog/remove.html', {'post': post})

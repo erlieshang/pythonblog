@@ -1,0 +1,17 @@
+{% extends 'mysite/base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block meta %}<meta charset="UTF-8" http-equiv="refresh" content="3;url={% url 'blog:index' %}">{% endblock %}
+{% block script %}
+    <script>
+        setInterval(function () {
+            var counter = Number(document.getElementById("counter").innerHTML);
+            counter--;
+            document.getElementById("counter").innerHTML = String(counter);
+        },1000)
+    </script>
+{% endblock %}
+{% block content %}
+    <p>You have successfully logged out.</p>
+    <p>You will be redirected to the index in <span id="counter">3</span> seconds.</p>
+{% endblock %}

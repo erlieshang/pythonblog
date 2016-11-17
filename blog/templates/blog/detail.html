@@ -20,7 +20,8 @@
             {% if post.pub_date is None %}
                 <a href="{% url 'blog:post_pub' post.id%}"><button type="button" class="btn btn-primary">Publish</button></a>
             {% endif %}
-                <a href="{% url 'blog:post_edit' post.id%}"><button type="button" class="btn btn-default">Edit</button></a>
+                <a href="{% url 'blog:post_edit' post.id%}"><button type="button" class="btn btn-warning">Edit</button></a>
+                <a href="{% url 'blog:post_remove' post.id%}"><button type="button" class="btn btn-danger">Delete</button></a>
             </div>
         </div>
         <p id="detail-text">{{ post.text|linebreaks }}</p>

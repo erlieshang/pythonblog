@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^article/new/$', views.post_new, name='new_post'),
     url(r'^article/(?P<pk>[0-9]+)/edit/$', views.post_edit, name='post_edit'),
     url(r'^article/(?P<pk>[0-9]+)/publish/$', views.post_pub, name='post_pub'),
+    url(r'^article/(?P<pk>[0-9]+)/remove/$', views.post_remove, name='post_remove'),
 ]

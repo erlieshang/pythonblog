@@ -3,7 +3,11 @@
 {% block title %}New Post{% endblock %}
 
 {% block content %}
-    <h1>New Post</h1>
+    {% if post %}
+        <h1>{{ post.title }}</h1>
+    {% else %}
+        <h1>New Post</h1>
+    {% endif %}
     <form method="POST" id="post_edit">
     {% csrf_token %}
         {{ form.as_p }}

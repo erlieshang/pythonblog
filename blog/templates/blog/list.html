@@ -16,6 +16,23 @@
             {% endfor %}
             </tbody>
         </table>
+        <div class="text-center">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                    <li class="disabled"><a href="#">&laquo;</a></li>
+                {% endif %}
+                {% for i in page_obj.paginator.page_range %}
+                    <li {% if i == page_obj.number %} class="active" {% endif %}><a href="?page={{ i }}">{{ i }}</a></li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                    <li class="disabled"><a href="#">&raquo;</a></li>
+                {% endif %}
+            </ul>
+        </div>
     {% else %}
         <p>No posts are available.</p>
     {% endif %}

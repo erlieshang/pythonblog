@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
+    url(r'^search/', include('haystack.urls')),
     url(r'^polls/', include('polls.urls')),
     url(r'', include('blog.urls')),
     url(r'^admin/', admin.site.urls),

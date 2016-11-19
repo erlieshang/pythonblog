@@ -31,10 +31,32 @@
     margin-top: 40px;
 }
 
-#post_edit label {
-    float: left;
+#post-edit h1 {
+    margin-bottom: 30px;
 }
 
+#post-edit label {
+    height: 26px;
+    line-height: 26px;
+    font-size: large;
+    margin-right: 15px;
+}
+
+#post-edit #id_text {
+    height: 50%;
+}
+
+#post-edit-title {
+    margin-bottom: 30px;
+}
+
+#post-edit-text {
+    margin-bottom: 30px;
+}
+
+#post-edit-title input {
+    width: 40%;
+}
 #login-form {
     margin-top: 5%;
 }

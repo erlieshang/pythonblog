@@ -1,8 +1,5 @@
-from django.forms import ModelForm
+from django.forms import modelform_factory
 from .models import Post
 
 
-class PostForm(ModelForm):
-    class Meta:
-        model = Post
-        fields = ['title', 'text']
+PostForm = modelform_factory(Post, fields=("title", "text"))

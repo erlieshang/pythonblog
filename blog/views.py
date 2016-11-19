@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .forms import PostForm
+from haystack.forms import SearchForm
 
 
 class IndexView(generic.ListView):
@@ -44,7 +45,7 @@ def post_new(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            if request.POST.get('submit') == 'publish':
+            if request.POST.get('operation') == 'publish':
                 post.publish()
             else:
                 post.save_draft()
@@ -80,7 +81,7 @@ def post_pub(request, pk):
 def post_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
-        if request.POST.get('submit') == 'Confirm':
+        if request.POST.get('operation') == 'Confirm':
             post.delete()
             return redirect('blog:list')
         else:

@@ -1,0 +1,31 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Search Page -- Erlie's Blog{% endblock %}
+
+{% block content %}
+    <h3>Search</h3>
+    <form method="get" action=".">
+        {{ form.as_p }}
+        <input type="submit" value="Search" />
+        {% if query %}
+            <h4>Results</h4>
+            {% for result in page.object_list %}
+                <ul>
+                    <li><a href="{{ result.object.get_absolute_url }}">{{ result.object.title }}</a> </li>
+                </ul>
+            {% empty %}
+                <p>No results found</p>
+            {% endfor %}
+
+            {% if page.has_previous or page.has_next %}
+                <div>
+                    {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
+                    |
+                    {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
+                </div>
+            {% endif %}
+
+        {% endif %}
+    </form>
+
+{% endblock %}

@@ -1,19 +1,46 @@
 {% extends 'blog/base.html' %}
 
-{% block title %}New Post{% endblock %}
+{% block title %}
+    {% if post %}
+        {{ post.title }}
+    {% else %}
+        New Post
+    {% endif %}
+{% endblock %}
+
+{% block otherlink %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'wangEditor/css/wangEditor.min.css' %}" />
+    <script src="{% static 'wangEditor/js/wangEditor.min.js' %}"></script>
+{% endblock %}
 
 {% block content %}
-    {% if post %}
-        <h1>{{ post.title }}</h1>
-    {% else %}
-        <h1>New Post</h1>
-    {% endif %}
-    <form method="POST" id="post_edit">
-    {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary" value="publish">Publish</button>
-        {% if post.pub_date is None%}
-            <button type="submit" class="btn btn-default" value="save">Save as Draft</button>
+    <div id="post-edit">
+        {% if post %}
+            <h1>{{ post.title }}</h1>
+        {% else %}
+            <h1>New Post</h1>
         {% endif %}
-    </form>
+        <form method="POST">
+        {% csrf_token %}
+            <p id="post-edit-title">
+                {{ form.title.label_tag }}
+                {{ form.title }}
+            </p>
+            <p id="post-edit-text">
+                {{ form.text }}
+            </p>
+            <button type="submit" class="btn btn-primary" name="operation" value="publish">Publish</button>
+            {% if post.pub_date is None%}
+                <button type="submit" class="btn btn-default" name="operation" value="save">Save</button>
+            {% endif %}
+            <a href="{% if post %} {% url 'blog:detail' post.id %} {% else %} {% url 'blog:index' %} {% endif %}"><input type="button" class="btn btn-warning" value="Cancel" /></a>
+        </form>
+    </div>
+    <script>
+        var textarea = document.getElementById('id_text');
+        var editor = new wangEditor(textarea);
+        editor.config.lang = wangEditor.langs['en'];
+        editor.create()
+    </script>
 {% endblock %}

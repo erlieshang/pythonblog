@@ -24,7 +24,7 @@
                 <a href="{% url 'blog:post_remove' post.id%}"><button type="button" class="btn btn-danger">Delete</button></a>
             </div>
         </div>
-        <p id="detail-text">{{ post.text|linebreaks }}</p>
+        <p id="detail-text">{{ post.text|safe }}</p>
     {% else %}
         <p>Article Not Found!</p>
     {% endif %}

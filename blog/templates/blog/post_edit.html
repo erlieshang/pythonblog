@@ -12,6 +12,23 @@
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static 'wangEditor/css/wangEditor.min.css' %}" />
     <script src="{% static 'wangEditor/js/wangEditor.min.js' %}"></script>
+    <script>
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -41,6 +58,12 @@
         var textarea = document.getElementById('id_text');
         var editor = new wangEditor(textarea);
         editor.config.lang = wangEditor.langs['en'];
+        editor.config.uploadImgFileName = 'ImgName';
+        editor.config.uploadImgUrl = '{% url 'blog:img_upload' %}';
+        var token = getCookie('csrftoken');
+        editor.config.uploadHeaders = {
+            'X-CSRFToken' : token
+        };
         editor.create()
     </script>
 {% endblock %}

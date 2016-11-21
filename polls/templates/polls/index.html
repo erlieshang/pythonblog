@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    {% load staticfiles %}
-    <link  href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
-</head>
-<body>
-    <h1>It is </h1>
+{% extends 'polls/base.html' %}
+
+{% block title %}Polls list -- Erlie's Blog{% endblock %}
+
+{% block content %}
     {%  if latest_question_list %}
         <ul>
             {% for question in latest_question_list %}
@@ -17,5 +12,4 @@
     {% else %}
         <p>No polls are available.</p>
     {% endif %}
-</body>
-</html>
+{% endblock %}

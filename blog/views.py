@@ -1,11 +1,11 @@
 from django.views import generic
-from .models import Post
+from .models import Post, ImageInPost
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from .forms import PostForm
-from haystack.forms import SearchForm
 
 
 class IndexView(generic.ListView):
@@ -87,3 +87,16 @@ def post_remove(request, pk):
         else:
             return redirect('blog:detail', pk=post.pk)
     return render(request, 'blog/remove.html', {'post': post})
+
+
+def img_upload(request):
+    ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+    if request.method == 'POST':
+        instance = ImageInPost(image=request.FILES['ImgName'])
+        if '.' in instance.image.name and instance.image.name.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS:
+            instance.save()
+            return HttpResponse(instance.image.url, content_type="text/html", charset="utf-8")
+        else:
+            return HttpResponse("error| invalid extension", content_type="text/html", charset="utf-8")
+    else:
+        return HttpResponse("error| upload failed", content_type="text/html", charset="utf-8")

@@ -1,6 +1,13 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.urls import reverse
+
+
+class BlogUser(models.Model):
+    user = models.OneToOneField(User)
+    avatar = models.ImageField(upload_to='blog/upload/avatar', blank=True)
+    date_of_birth = models.DateField(verbose_name='Date of Birth', blank=True)
 
 
 class Post(models.Model):
@@ -21,6 +28,23 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('blog:detail', kwargs={'pk': self.pk})
+
 
 class ImageInPost(models.Model):
     image = models.ImageField(upload_to='blog/upload/image')
+
+
+class Comment(models.Model):
+    author = models.ForeignKey(User)
+    bound_to_post = models.ForeignKey(Post)
+    floor = models.IntegerField(default=1)
+    content = models.TextField()
+    date = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        ordering = ['-date']
+
+    def __str__(self):
+        return self.content

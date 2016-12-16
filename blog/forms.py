@@ -1,10 +1,20 @@
 from django.forms import modelform_factory
-from .models import Post
+from .models import Post, Comment
 from django import forms
 from haystack.forms import SearchForm
 
 
 PostForm = modelform_factory(Post, fields=("title", "text"))
+
+CommentForm = modelform_factory(Comment, fields=("content",))
+
+
+class RegisterForm(forms.Form):
+    username = forms.CharField(label='Username', max_length=150)
+    password = forms.CharField(label='Password', min_length=8, max_length=100, widget=forms.PasswordInput)
+    email = forms.EmailField(label='Email')
+    date_of_birth = forms.DateField(label='DateOfBirth')
+    avatar = forms.ImageField(label='Avatar', required=False)
 
 
 class DateRangeSearchForm(SearchForm):

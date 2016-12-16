@@ -2,6 +2,14 @@
 
 {% block title %}{{ post.title }}--Erlie's Blog{% endblock %}
 
+{% block otherlink %}
+    <script>
+        $(document).ready(function () {
+           $("#id_content").addClass("form-control").attr("placeholder", "Type your comment...");
+        });
+    </script>
+{% endblock %}
+
 {% block content %}
     {%  if post %}
         <h1>{{ post.title }}</h1>
@@ -23,8 +31,25 @@
                 <a href="{% url 'blog:post_edit' post.id%}"><button type="button" class="btn btn-warning">Edit</button></a>
                 <a href="{% url 'blog:post_remove' post.id%}"><button type="button" class="btn btn-danger">Delete</button></a>
             </div>
+            <div id="detail-text" class="col-sm-12">{{ post.text|safe }}</div>
         </div>
-        <p id="detail-text">{{ post.text|safe }}</p>
+        {% for comment in post.comment_set.all %}
+            <div class="media">
+
+            </div>
+        {% empty %}
+            <p class="text-muted lead">No comments now! Comment for Sofa!</p>
+        {% endfor %}
+
+        <form method="POST" action="{% url 'blog:add_comment' post.id %}" role="form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Post a comment:</label>
+                {{ comment_form.content }}
+            </div>
+            <button type="submit" class="btn btn-default pull-right">Commit</button>
+        </form>
+
     {% else %}
         <p>Article Not Found!</p>
     {% endif %}
